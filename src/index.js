@@ -6,12 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 //Redux provider ekleniyor. State bilgilerini bunun üzerinde tutacağız.
 //Provider tüm diğer componentlerin parenti olmuş oldu.
 import { Provider } from "react-redux";
-import strore from './redux/store';
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./redux/store";
+
+//PersistGate'i ve persistor'ı sayfanın refreshlenmesi durumunda dataları kaybetmemek için ekliyoruz.
+//localstorage kullanıyoruz.
 
 ReactDOM.render(
-  <Provider store={strore}>
+  <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
